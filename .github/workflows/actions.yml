@@ -1,0 +1,30 @@
+on:
+  push:
+    branch: develop
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v1
+      - run: make s21_decimal.a
+  test:
+    runs-on: macos-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v1
+      - run: brew install check
+      - run: make test
+  gcov_report:
+    runs-on: macos-latest
+    needs: [build, test]
+    steps:
+      - uses: actions/checkout@v1
+      - run: brew install check gcovr lcov
+      - run: bash ./test_scripts/gcov_script.sh
+  style:
+    runs-on: macos-latest
+    needs: [build, test, gcov_report]
+    steps:
+      - uses: actions/checkout@v1
+      - run: brew install clang-format
+      - run: bash ./test_scripts/style.sh
