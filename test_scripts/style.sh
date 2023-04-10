@@ -1,7 +1,7 @@
 #!/bin/bash
 
 make style 2>output
-cat./output
+cat ./output
 if [ -z "$(cat ./output)" ]
 then
   exit 0
