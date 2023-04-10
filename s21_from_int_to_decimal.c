@@ -1,7 +1,6 @@
 #include "s21_decimal.h"
 
 int s21_from_int_to_decimal(int src, s21_decimal *dst) {
-
   error_status = OK;
   for (int i = 0; i <= 3; i++) {
     dst->bits[i] = 0;
